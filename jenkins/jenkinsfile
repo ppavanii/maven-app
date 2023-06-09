@@ -50,14 +50,23 @@ pipeline {
 
     stage('Docker Build') {
           steps {
+            withCredentials([string(credentialsId: 'DOCKER_TOKEN', variable: 'DOCKER_PASSWORD')]) 
 
-        	  	sh 'docker build . -t moonica/awsbatch1:latest'
-        	  //	sh 'docker login -u moonica -p dckr_pat_qjPKOk0O0zGzEdUoJnMNSIGAbUY '
+            	sh 'docker build . -t moonica/awsbatch1:latest'
+        	  //	sh 'docker login -u moonica -p ${DOCKER_PASSWORD}'
         	  //	sh 'docker push moonica/awsbatch1:latest'
         	  	sh 'docker run -d moonica/awsbatch1:latest'
         	 
             }
        
+    }
+    stage('Archive and clean workspace') {
+                steps {
+                    
+                    archive 'target/demo*.jar'
+                    //archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+                    cleanWs()
+                }
     }
 }
 }
