@@ -18,12 +18,12 @@ pipeline {
     }
     
 
-    options     {
-                timestamps()
-                buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '2'))
-                timeout(time: 240, unit: 'MINUTES')
-                disableConcurrentBuilds()
-                }
+    //options     {
+                //timestamps()
+                //buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '2'))
+                //timeout(time: 240, unit: 'MINUTES')
+                //disableConcurrentBuilds()
+               // }
 
     parameters {
             string(name: 'appBranch', defaultValue: 'main', description: "Application Branch name of the Repo")
@@ -36,8 +36,6 @@ pipeline {
 
             	git branch: appBranch , url: 'https://github.com/ppavanii/maven-app.git'
         
-                //echo 'Hello World'
-                //sh 'hostname'
             }
         }
 
