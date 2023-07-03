@@ -60,6 +60,32 @@ pipeline {
             }
        
     }
+    stage('K8SManifest-checkout') {
+        steps{
+            git 'https://github.com/pythonlifedevops/aws-k8s-cicd.git'
+        }
+    }
+    stage ('kubernetes autodeployment') {
+
+        steps {
+            withCredentials([string(credentialsId: 'k8s_Token', variable: 'k8s_passwrd')]) 
+
+             dir ('manifest'){
+                sh 'ls -l'
+                sh 'kubectl --server= --https://3C131EFA0DDF5030F4B441B2CDD2E3AE.gr7.us-east-1.eks.amazonaws.com --insecure-skip-tls-verify --' 'apply -f deployment.yaml'
+                sh 'kubectl --server= --https://3C131EFA0DDF5030F4B441B2CDD2E3AE.gr7.us-east-1.eks.amazonaws.com --insecure-skip-tls-verify --' 'apply -f service.yaml'
+                echo "done"
+
+                sh 'kubectl get deployments'
+                sh 'sleep 100 ; kubectl get services'
+
+             }
+             
+            
+            }
+        }
+
+    }
     stage('Archive and clean workspace') {
                 steps {
                     
