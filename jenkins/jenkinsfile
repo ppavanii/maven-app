@@ -62,7 +62,7 @@ pipeline {
     }
     stage('K8SManifest-checkout') {
         steps{
-            git 'https://github.com/pythonlifedevops/b1-devops-cicd.git'
+            git 'https://github.com/ppavanii/maven-app.git'
         }
     }
     stage ('kubernetes autodeployment') {
